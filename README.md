@@ -4,7 +4,19 @@ Your challenge, if you wish to accept it (and we sure hope you will), is to opti
 
 To get started, check out the repository and inspect the code.
 
-### Getting started
+
+###Optimization of index.html for PageSpeed Score
+
+In order to improve the PageSpeed score for the index file, the following optimizations were made:
+
+* async tag added to js script calls as they were not render blocking
+* removed Google Font tag
+* inlined and minified contents of style.css
+* losslessly compressed jpg files using compressor.io
+
+
+
+<!-- ### Getting started
 
 ####Part 1: Optimize PageSpeed Insights score for index.html
 
@@ -53,3 +65,4 @@ The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstra
 
 * <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
 * <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+ -->
