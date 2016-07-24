@@ -485,7 +485,8 @@ var resizePizzas = function(size) {
                 break;
         }
 
-        var randomPizzas = document.querySelectorAll(".randomPizzaContainer");
+        // Replaced querySelectorAll with getElementsByClassName
+        var randomPizzas = document.getElementsByClassName(".randomPizzaContainer");
 
         for (var i = 0; i < randomPizzas.length; i++) {
             randomPizzas[i].style.width = newWidth + "%";
@@ -504,8 +505,9 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+var pizzasDiv = document.getElementById("randomPizzas");
+
 for (var i = 2; i < 100; i++) {
-    var pizzasDiv = document.getElementById("randomPizzas");
     pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -543,16 +545,18 @@ function updatePositions() {
     // This array will contain the new position for each of the mover pizza elements
     var newPos = [];
 
-    // The following loops cycles through the .mover elements in items and calculates the
-    // new position for each
-    for (var i = 0; i < items.length; i++) {
-        var phase = Math.sin(scrolled + (i % 5));
-        newPos.push(items[i].basicLeft + 100 * phase + 'px');
+    // This array contains the possible phases resulting from (i % 5)
+    var phases = [];
+    for (var i=0; i<5; i++) {
+    	phases.push(Math.sin(scrolled+i));
     }
+
     // The following loop cycles through each .mover element and applies the new position
-    // that was calculated in the previous loop
+    // change (phase) that was calculated in the previous loop
+    var phase;
     for (var i = 0; i < items.length; i++) {
-        items[i].style.left = newPos[i];
+    	phase = phases[i%5];
+        items[i].style.left = phase;
     }
 
     // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -568,26 +572,26 @@ function updatePositions() {
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
 
-// Generates the sliding pizzas when the page loads.
+// Generates the sliding pizzas when the page loads.  The number of pizzas loaded
+// will change depending on the screen size that is being used.
 document.addEventListener('DOMContentLoaded', function() {
-	var width = screen.width;
-	var height = screen.height;
-	var s = 256;
-	var columns = width / s;
-	var rows = screenHeight / s;
-	var pizzaCount = columns * rows;
-	var movingPizzas1 = document.querySelector("#movingPizzas1");
+    var width = screen.width;
+    var height = screen.height;
+    var s = 256;
+    var columns = width / s;
+    var rows = screenHeight / s;
+    var pizzaCount = columns * rows;
+    var movingPizzas1 = document.getElementById("#movingPizzas1");
 
-	for (var i = 0; i < (pizzaCount+1); i++) {
-		var elem = document.createElement("img");
-		elem.className = "mover";
-		elem.src = "images/pizza.png";
-		elem.style.height = "100px";
-		elem.style.widht = "73.333px";
-		elem.basicLeft = (i % columns) * s;
-		elem.style.top = (Math.floor(i / columns) * s) + "px";
-		movingPizzas1(elem);
+    for (var i = 0; i < (pizzaCount + 1); i++) {
+        var elem = document.createElement("img");
+        elem.className = "mover";
+        elem.src = "images/pizza.png";
+        elem.style.height = "100px";
+        elem.style.widht = "73.333px";
+        elem.basicLeft = (i % columns) * s;
+        elem.style.top = (Math.floor(i / columns) * s) + "px";
+        movingPizzas1.appendChild(elem);
 
-	}
+    }
 });
-

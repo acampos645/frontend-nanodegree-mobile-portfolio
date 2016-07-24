@@ -21,10 +21,13 @@ In order to improve the PageSpeed score for the index file, the following optimi
 
 In order to optimize the pizza size-switching function, the changePizzaSizes function was simplified.  Instead of having to calculate the change in and new size, three scenarios are provided (25%, 33.3% or 50%).  Then, a for-loop cycles through the pizza containers and applies the change in size to each.
 
+Additionally, the querySelectorAll method was replaced with getElementsByClassName which has a better performance.
+
 ##Main.js - Scrolling pizzas
 
 To improve the FPS of the pizzeria page, changes were made relating to the scrolling pizzas in the background of the page. To do this, the following changes were made to the updatePositions function:
 
+* In style.css, will-change, transform and backface-visibility properties were added to the .movers class.
 * The document.body.scrollTop call was removed from the for-loop and moved into the global function scope since it only needs to be determined once.
-* Changes to the layout and style were separated into two different for-loops.  The first cycles through an array of moving pizza elements and determines the new positions.  The second cycles through the same pizza elements and applies the new position to the element styles.
-* The total number of moving pizzas that the page renders was reduced from 200 to 40 in order to decrease the number of elements to be rendered.
+* For each scroll, there are only 5 possible phase changes, so these were calculated using a separate for loop before changes are applied to the moving pizzas.  The next for loop cycles through the list of .mover pizza elements and applies one of the five previously calculated phases.
+* The total number of moving pizzas that the page renders was changed from 200 to a dynamic value.  The number generated will be calculated according to the size of the user's screen.
