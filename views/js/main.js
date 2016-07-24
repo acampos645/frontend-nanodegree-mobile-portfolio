@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var height = screen.height;
     var s = 256;
     var columns = width / s;
-    var rows = screenHeight / s;
+    var rows = height / s;
     var pizzaCount = columns * rows;
     var movingPizzas1 = document.getElementById("#movingPizzas1");
 
