@@ -572,7 +572,7 @@ function updatePositions() {
 window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.  The number of pizzas loaded
-// will change depending on the screen size that is being used.
+// will vary depending on the screen size that is being used.
 
 document.addEventListener('DOMContentLoaded', function() {
     var width = screen.width;
@@ -581,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var columns = Math.ceil(width / s);
     var rows = Math.ceil(height / s);
     var pizzaCount = columns * rows;
-    var movingPizzas1 = document.querySelector("#movingPizzas1");
+    var movingPizzas1 = document.getElementById("movingPizzas1");
     for (var i = 0; i < pizzaCount; i++) {
         var elem = document.createElement("img");
         elem.className = "mover";
@@ -594,19 +594,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     updatePositions();
 });
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   var cols = 8;
-//   var s = 256;
-//   for (var i = 0; i < 100; i++) {
-//     var elem = document.createElement('img');
-//     elem.className = 'mover';
-//     elem.src = "images/pizza.png";
-//     elem.style.height = "100px";
-//     elem.style.width = "73.333px";
-//     elem.basicLeft = (i % cols) * s;
-//     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-//     document.querySelector("#movingPizzas1").appendChild(elem);
-//   }
-//   updatePositions();
-// });
