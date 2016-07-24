@@ -555,8 +555,7 @@ function updatePositions() {
     // change (phase) that was calculated in the previous loop
     var phase;
     for (var i = 0; i < items.length; i++) {
-    	phase = phases[i%5];
-        items[i].style.left = phase;
+        items[i].style.left = items[i].basicLeft + 100 * phases[i%5] + "px";
     }
 
     // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -574,23 +573,40 @@ window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.  The number of pizzas loaded
 // will change depending on the screen size that is being used.
+
 document.addEventListener('DOMContentLoaded', function() {
     var width = screen.width;
     var height = screen.height;
     var s = 256;
-    var columns = width / s;
-    var rows = height / s;
+    var columns = Math.ceil(width / s);
+    var rows = Math.ceil(height / s);
     var pizzaCount = columns * rows;
-    var movingPizzas1 = document.getElementById("#movingPizzas1");
-
-    for (var i = 0; i < (pizzaCount + 1); i++) {
+    var movingPizzas1 = document.querySelector("#movingPizzas1");
+    for (var i = 0; i < pizzaCount; i++) {
         var elem = document.createElement("img");
         elem.className = "mover";
         elem.src = "images/pizza.png";
         elem.style.height = "100px";
-        elem.style.widht = "73.333px";
-        elem.basicLeft = (i % columns) * s;
+        elem.style.width = "73.333px";
+        elem.basicLeft = ((i % columns) * s);
         elem.style.top = (Math.floor(i / columns) * s) + "px";
         movingPizzas1.appendChild(elem);
     }
+    updatePositions();
 });
+
+// document.addEventListener('DOMContentLoaded', function() {
+//   var cols = 8;
+//   var s = 256;
+//   for (var i = 0; i < 100; i++) {
+//     var elem = document.createElement('img');
+//     elem.className = 'mover';
+//     elem.src = "images/pizza.png";
+//     elem.style.height = "100px";
+//     elem.style.width = "73.333px";
+//     elem.basicLeft = (i % cols) * s;
+//     elem.style.top = (Math.floor(i / cols) * s) + 'px';
+//     document.querySelector("#movingPizzas1").appendChild(elem);
+//   }
+//   updatePositions();
+// });
